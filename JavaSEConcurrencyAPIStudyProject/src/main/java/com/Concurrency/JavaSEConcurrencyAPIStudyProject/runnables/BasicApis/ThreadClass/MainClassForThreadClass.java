@@ -1,6 +1,4 @@
-package com.Concurrency.JavaSEConcurrencyAPIStudyProject;
-
-import com.Concurrency.JavaSEConcurrencyAPIStudyProject.runnables.ReadFileUsingThreadClass;
+package com.Concurrency.JavaSEConcurrencyAPIStudyProject.runnables.BasicApis.ThreadClass;
 
 /**
  * 

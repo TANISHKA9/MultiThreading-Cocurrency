@@ -1,4 +1,4 @@
-package com.Concurrency.JavaSEConcurrencyAPIStudyProject.runnables;
+package com.Concurrency.JavaSEConcurrencyAPIStudyProject.runnables.BasicApis.ThreadClass;
 
 import java.io.BufferedReader;
 import java.io.File;

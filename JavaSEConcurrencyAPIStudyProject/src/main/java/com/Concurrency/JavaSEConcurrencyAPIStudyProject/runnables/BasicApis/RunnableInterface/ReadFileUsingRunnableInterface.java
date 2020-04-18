@@ -1,24 +1,20 @@
-package com.Concurrency.JavaSEConcurrencyAPIStudyProject.runnables;
+package com.Concurrency.JavaSEConcurrencyAPIStudyProject.runnables.BasicApis.RunnableInterface;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 /**
  * 
  * @author TA
- * Three threads are generated here using Executor Interface and each thread reads data from file 
- * Using runnable interface.
+ * This Class works to read data from file using three threads using runnable interface parallel.
  *
  */
-public class ReadFileUsingRunnableInterfaceWithExecutorInterface {
-
+public class ReadFileUsingRunnableInterface{
+	
 	public static void main(String[] args) {
-		
 		Runnable runnable = () -> {
 			try(BufferedReader bufferedReader = new BufferedReader(new FileReader
 					(new File("C:\\Users\\sonar\\Documents\\workspace-sts-3.9.8.RELEASE\\JavaSEConcurrencyAPIStudyProject\\src\\main\\java\\Resources\\sample.txt")))) {
@@ -36,10 +32,11 @@ public class ReadFileUsingRunnableInterfaceWithExecutorInterface {
 			}
 		};
 		
-		Executor executor = Executors.newFixedThreadPool(3); //ThreadPool of three threads size will be created
-		executor.execute(runnable); //each statement of executor
-		executor.execute(runnable);
-		executor.execute(runnable);
+		Thread t1 = new Thread(runnable);
+		Thread t2 = new Thread(runnable);
+		Thread t3 = new Thread(runnable);
+		t1.start();
+		t2.start();
+		t3.start();
 	}
-
 }
