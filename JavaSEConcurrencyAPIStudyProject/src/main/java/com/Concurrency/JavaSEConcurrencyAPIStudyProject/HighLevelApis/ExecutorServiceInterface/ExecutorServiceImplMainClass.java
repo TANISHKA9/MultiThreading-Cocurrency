@@ -16,25 +16,31 @@ import java.util.concurrent.Future;
  * 
  * @author TA
  * 
- * PseudoCode/Steps:
- * 1. create bean for User with appropriate parameter as email, name, age.
- * 2. create Db connection class with table to store user with name: ExecutorServiceUserDB
- * 3. create UserDao class to store data into db.
- * 4. create UserProcessor to process the user data using Callable class:
- * 		Read row, parse it by (,) delimiter, 
- * 		map that data to user Object and pass it to dao class for saving into db.
- * 		Then return the row count of number of rowsUpadated to calling function back to MainClass.
- * 		 
+ *         PseudoCode/Steps: 1. create bean for User with appropriate parameter
+ *         as email, name, age. 2. create Db connection class with table to
+ *         store user with name: ExecutorServiceUserDB 3. create UserDao class
+ *         to store data into db. 4. create UserProcessor to process the user
+ *         data using Callable class: Read row, parse it by (,) delimiter, map
+ *         that data to user Object and pass it to dao class for saving into db.
+ *         Then return the row count of number of rowsUpadated to calling
+ *         function back to MainClass. 5. create database into mysql with name
+ *         multithreadingconcurrency and table user with three columns email,
+ *         name, age. 6. create ExecutorServiceImplMainClass to read file line
+ *         by line and call executorService.submit to pass each line of record
+ *         to
  *
  */
 public class ExecutorServiceImplMainClass {
 
 	public static void main(String[] args) {
-		int numberOfRecordsInsertedSuccessfully=0;
-		List<String> userRecordList = readFile("C:\\Users\\sonar\\git\\MultiThreading-Cocurrency\\JavaSEConcurrencyAPIStudyProject\\src\\main\\java\\Resources\\ExecutorServiceUserFile.txt");
-		ExecutorService executorService = Executors.newFixedThreadPool(3);
+		int numberOfRecordsInsertedSuccessfully = 0;
+		List<String> userRecordList = readFile(
+				"C:\\Users\\sonar\\git\\MultiThreading-Cocurrency\\JavaSEConcurrencyAPIStudyProject\\src\\main\\java\\Resources\\ExecutorServiceUserFile.txt");
+		// ExecutorService executorService = Executors.newSingleThreadExecutor();  //Thread pool of single thread.
+		// ExecutorService executorService = Executors.newFixedThreadPool(3); //Thread pool size is 3 here
+		ExecutorService executorService = Executors.newCachedThreadPool();
 		UserDao userDao = new UserDao();
-		for(String user:userRecordList) {
+		for (String user : userRecordList) {
 			Future<Integer> future = executorService.submit(new UserProcessor(user, userDao));
 			try {
 				numberOfRecordsInsertedSuccessfully = numberOfRecordsInsertedSuccessfully + future.get();
@@ -47,15 +53,14 @@ public class ExecutorServiceImplMainClass {
 		executorService.shutdown();
 		System.out.println("Operation Completed and ExecutorService is shutting down");
 	}
-	
+
 	private static List<String> readFile(String fileName) {
 		List<String> userRecordsList = new ArrayList<String>();
-		try(BufferedReader bufferedReader = new BufferedReader(new FileReader
-				(new File(fileName)))) {
-			
+		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(fileName)))) {
+
 			String line = null;
-			while((line=bufferedReader.readLine())!=null) {
-				System.out.println(Thread.currentThread().getName()+ " readings line " + line);
+			while ((line = bufferedReader.readLine()) != null) {
+				System.out.println(Thread.currentThread().getName() + " readings line " + line);
 				userRecordsList.add(line);
 			}
 		} catch (FileNotFoundException e) {
