@@ -1,5 +1,6 @@
 package com.Concurrency.JavaSEConcurrencyAPIStudyProject.HighLevelApis.ExecutorServiceInterface;
 
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.concurrent.Callable;
 
@@ -23,6 +24,8 @@ public class UserProcessor implements Callable<Integer>{
 			user.setName(stringTokenizer.nextToken());
 			user.setAge(Integer.valueOf(stringTokenizer.nextToken()));
 			numberOfRowsUpdates = userDao.saveUser(user);
+			if(numberOfRowsUpdates>0)
+			System.out.println("Save is done! for user: " + user);
 		}
 		return numberOfRowsUpdates;
 	}
