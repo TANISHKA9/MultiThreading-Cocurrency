@@ -35,6 +35,13 @@ public class ExecutorServiceThreeTypesOfShutDownMethodMainClass {
 			e.printStackTrace();
 		}
 		System.out.println(executorService.shutdownNow());
+//		executorService.shutdown();
+//		try {
+//			executorService.awaitTermination(5, TimeUnit.NANOSECONDS);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			executorService.shutdownNow();
+//		}
 		System.out.println("ExecutorService is shutting down " + executorService.isShutdown()); //After getting first future result this statement will be executed.
 		System.out.println("ExecutorService is Terminated " + executorService.isTerminated());
 		
